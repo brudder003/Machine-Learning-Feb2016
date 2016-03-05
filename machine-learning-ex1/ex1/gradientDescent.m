@@ -17,12 +17,9 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
 
-
-
-
-
-
-
+    %the vectorized gradient descent rule from class wiki
+    theta = theta - (alpha/m)*(X'*(X*theta-y));
+    
     % ============================================================
 
     % Save the cost J in every iteration    
