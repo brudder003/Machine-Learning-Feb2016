@@ -18,14 +18,8 @@ for iter = 1:num_iters
     %
 
 
-
-
-
-
-
-
-
-
+    %the vectorized gradient descent rule from class wiki
+    theta = theta - (alpha/m)*(X'*(X*theta-y));
 
     % ============================================================
 
