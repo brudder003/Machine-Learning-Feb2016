@@ -24,9 +24,7 @@ grad = zeros(size(theta));
 J = -1/m*(log((sigmoid(X*theta))')*y+log((1-sigmoid(X*theta))')*(1-y));
 
 %vectorized implementation of the gradient
-for i=1:size(theta)
-  grad = grad - (1/m)*X'*(sigmoid(X*theta)-y);
-end
+grad = (1/m).*X'.*(sigmoid(X*theta)-y);
 
 % =============================================================
 
