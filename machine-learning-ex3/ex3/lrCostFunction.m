@@ -36,12 +36,15 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-theta_s = theta(2:size(theta));
-theta_reg = [0;theta_s];
+
+
+h = sigmoid(X*theta);
+
+theta_reg = [0;theta(2:end, :);];
 
 % cost and grandient just like before
-cost = -1/m*(log((sigmoid(X*theta))')*y+log((1-sigmoid(X*theta))')*(1-y));
-grad = (1/m).*X'*(sigmoid(X*theta)-y);
+cost = -1/m*(log((h)')*y+log((1-h)')*(1-y));
+grad = (1/m).*X'*(h-y);
 
 % compute the regularized cost
 J = cost + (lambda / (2*m)) * sum(theta_reg .^ 2);
