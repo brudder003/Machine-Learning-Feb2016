@@ -30,10 +30,14 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+%predict like the last assignment
+predict = sigmoid(X*all_theta');
 
+%obtain max for each row like the hint
+[predict_max, index_max] = max(predict, [], 2);
 
-
-
+%return p
+p = index_max;
 
 
 % =========================================================================
