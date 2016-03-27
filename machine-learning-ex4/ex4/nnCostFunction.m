@@ -62,24 +62,38 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% X is 5000 x 400 right now, need to add ones to the beginning
+% for the bias node
+X = [ones(m,1) X];
 
+% i did some of the other exercises more vectorized
+% but tried and got a bit confused with NN so going with loops
+% as suggested above
 
+for i = 1:m
+  % X is 5000x401 going through 1 pic at a time
+  a1 = X(i,:);
+  % theta is 25x401 a1 is 1x401 
+  z2 = a1*Theta1';
+  % a2 is sigmoid of z2 and add the ones for the next layer
+  a2 = [ones(size(z2),1) sigmoid(z2)];
+  % calc z3 for the output layer
+  z3 = a2*Theta2';
+  % a3 (output) is sigmoid z3
+  a3 = sigmoid(z3);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  % for the given i change y into a vector that is zero
+  % everywhere except its the index of its correct labels
+  y_label = zeros(num_labels,1);
+  y_label(y(i)) = 1;
+  
+  % another for loop to add up cost by labels
+  for j = 1:num_labels
+    J = J + (-y_label(j)*log(a3(j)) - (1-y_label(j)*log(1-a3(j))))/m;
+  end
+  
+ end
+   
 % -------------------------------------------------------------
 
 % =========================================================================
