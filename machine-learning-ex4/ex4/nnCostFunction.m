@@ -66,6 +66,15 @@ Theta2_grad = zeros(size(Theta2));
 % for the bias node
 X = [ones(m,1) X];
 
+%https://github.com/artmunich/MachineLearning/blob/master/machine-learning-ex4/nnCostFunction.m
+% Convert y into a num_labels*m matrix
+y_conv = zeros(num_labels,m);
+for i = 1:m
+    y2vec = zeros(num_labels,1);
+    y2vec(y(i)) = 1;
+    y_conv(:,i) = y2vec;
+end
+
 % i did some of the other exercises more vectorized
 % but tried and got a bit confused with NN so going with loops
 % as suggested above
@@ -73,12 +82,13 @@ X = [ones(m,1) X];
 for i = 1:m
   % X is 5000x401 going through 1 pic at a time
   a1 = X(i,:);
-  % theta is 25x401 a1 is 1x401 
-  z2 = a1*Theta1';
+  % theta1 is 25x401 a1 is 1x401 
+  z2 = Theta1*a1';
   % a2 is sigmoid of z2 and add the ones for the next layer
-  a2 = [ones(size(z2),1) sigmoid(z2)];
+  a2 = sigmoid(z2);
+  a2 = [1 a2'];
   % calc z3 for the output layer
-  z3 = a2*Theta2';
+  z3 = Theta2*a2';
   % a3 (output) is sigmoid z3
   a3 = sigmoid(z3);
 
@@ -89,7 +99,7 @@ for i = 1:m
   
   % another for loop to add up cost by labels
   for j = 1:num_labels
-    J = J + (-y_label(j)*log(a3(j)) - (1-y_label(j)*log(1-a3(j))))/m;
+    J = J + (-y_conv(j,i)*log(a3(j)) - (1-y_conv(j,i)*log(1-a3(j))))/m;
   end
   
  end
@@ -103,3 +113,4 @@ grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
 end
+siz
