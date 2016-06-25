@@ -14,11 +14,9 @@ g = zeros(size(z));
 
 
 
+%g is the derivative of the sigmoid function 
 
-
-
-
-
+g = sigmoid(z).*(1-sigmoid(z));
 
 
 
