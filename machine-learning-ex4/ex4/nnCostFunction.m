@@ -66,11 +66,12 @@ Theta2_grad = zeros(size(Theta2));
 % for the bias node
 X = [ones(m,1) X];
 
-% i did some of the other exercises more vectorized
-% but tried and got a bit confused with NN so going with loops
-% as suggested above
 
+%feedforward, cost back prop
 for i = 1:m
+  
+  %FEEDFORWARD
+
   % X is 5000x401 going through 1 pic at a time
   a1 = X(i,:);
   % theta1 is 25x401 a1 is 1x401 
@@ -88,6 +89,20 @@ for i = 1:m
   y_label = zeros(num_labels,1);
   y_label(y(i)) = 1;
   
+  %BACKPROPAGATION
+   
+  %for each output unit k in layer 3 set d3=(a3 - y)
+  d3 = a3 - y_label;
+  
+  %For the hidden layer l=2 set d2 = t2'*d3.*sigmoidGrad(z2)
+  z2 = [1;z2];
+  d2 = Theta2'*d3.*sigmoidGradient(z2);
+  d2 = d2(2:end);
+  
+  %accumulate the gradient from this example
+  Theta1_grad = Theta1_grad + d2*a1;
+  Theta2_grad = Theta2_grad + d3*a2';
+  
   cost = 0;
   % another for loop to add up cost by labels
   for k = 1:num_labels
@@ -95,10 +110,14 @@ for i = 1:m
     cost = cost + costk;
   end
   
+  %add the cost form that observation to the rest of the cost
   J = J + cost;
   
  end
  
+ %dont want to use the bias unit in regularization
+ %regularize by taking the square of each element in theta1
+ %then summing theta element by element
  Theta1_reg = Theta1(:,2:end);
  Theta1_reg = Theta1_reg.^2;
  T1_regsum= sum(Theta1_reg(:));
@@ -107,9 +126,16 @@ for i = 1:m
  Theta2_reg = Theta2_reg.^2;
  T2_regsum = sum(Theta2_reg(:));
  
+ %add the two thetas assuming we have one hidden layer
+ %but the program works for any size theta
  Reg = (lambda / (2*m)) * (T2_regsum+T1_regsum);
  
+ %add the reg term to the rest of our cost
  J = J + Reg;
+ 
+ %gradients
+ Theta1_grad = (1/m)*Theta1_grad +(lambda/m)*[zeros(size(Theta1, 1), 1) Theta1(:,2:end)];
+ Theta2_grad = (1/m)*Theta2_grad +(lambda/m)*[zeros(size(Theta2, 1), 1) Theta2(:,2:end)];
  
    
 % -------------------------------------------------------------
