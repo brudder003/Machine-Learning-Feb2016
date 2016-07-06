@@ -53,8 +53,20 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+%size of validation set
+for i = 1:m,
 
-
+    %train linear reg function supplied in this exercise
+    theta = trainLinearReg(X(1:i,:), y(1:i), lambda);
+    
+    %training error using linearRegCostFunction from eariler exercise
+    error_train(i) = linearRegCostFunction(X(1:i, :), y(1:i), theta, 0);
+    
+    %validation error also using linearRegCostFunction
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+   
+    
+end
 
 
 
