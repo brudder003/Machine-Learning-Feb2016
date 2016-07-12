@@ -16,9 +16,11 @@ sim = 0;
 %
 %
 
+%forumula from notes, similarity fu for gaussian kernal is 
+%exp(-(||x-l||^2)/2sigma^2) l are the land marks, commonly use 
+%training data as the land marks like here
 
-
-
+sim = exp(-1*((norm(x1-x2))^2/(2*sigma^2)));
 
 
 % =============================================================
