@@ -13,9 +13,13 @@ centroids = zeros(K, size(X, 2));
 %               the dataset X
 %
 
+%code given in the pdf
 
+%randomly reorder the indicies of examples
+randidx = randperm(size(X,1));
 
-
+%take the first k examples as centroids
+centroids = X(randidx(1:K),:);
 
 
 

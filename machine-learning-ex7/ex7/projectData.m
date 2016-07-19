@@ -18,6 +18,11 @@ Z = zeros(size(X, 1), K);
 %                    projection_k = x' * U(:, k);
 %
 
+%u_reduce grab the first K columns of the U matrix
+u_reduce = U(:, 1:K);
+
+%compute the reduced feature vectorize
+Z = X*u_reduce;
 
 
 

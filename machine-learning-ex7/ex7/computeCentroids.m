@@ -29,8 +29,20 @@ centroids = zeros(K, n);
 
 
 
-
-
+#loop over centroids
+for i = 1:K
+   
+  #find indicies assigned to this centroid
+  centroid_idx = find(idx==i);
+  
+  #subset features to those indicies
+  x_centroid = X(centroid_idx,:);
+  
+  #take the avg of those and put it in as new centorid i
+  x_avg = mean(x_centroid);
+  centroids(i,:) = x_avg;
+  
+end
 
 
 % =============================================================
