@@ -39,7 +39,7 @@ for epsilon = min(pval):stepsize:max(pval)
     fp = sum((predictions==1) & (yval==0));
     
     %false neg = predictions = 0 and yval = 1
-    fn = sum((predictions==0) & (yval==0));
+    fn = sum((predictions==0) & (yval==1));
     
     %precision 
     prec = tp/(tp+fp);
