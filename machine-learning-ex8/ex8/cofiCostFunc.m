@@ -39,20 +39,42 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
-costij =0;
-cost = 0;
+%unvectorized, i did this first bc it seemed easier,
+%really vectorized was even easier to think about,
+%maybe the matrix manipulation is starting to stick :)
 
+%costij =0;
+%cost = 0;
+
+%for i=1:size(R,1)
+ % for j=1:size(R,2)
+  %  if R(i,j) == 1
+   %   costij = (Theta(j,:)*X(i,:)' - Y(i,j))^2;
+    %  cost = cost + costij;
+    %end
+  %end
+%end
+
+%COST FUNCTION
+M = zeros(size(R));
+%VECTORIZED
+M = (X*Theta' - Y).^2;
+%compute cost, I calculed the cost for all obs
+%bc vectorized is faster than loops,
+%but now need to elimated all the costs i calc-ed when
+% a movie was rated, ie r(i,j) = 0
+J = (0.5)*(sum(sum(R.*M)));
+
+%Gradient
+
+%loop over movies
 for i=1:size(R,1)
-  for j=1:size(R,2)
-    if R(i,j) == 1
-      costij = (Theta(j,:)*X(i,:)' - Y(i,j))^2;
-      cost = cost + costij;
-    end
-  end
-end
+  
 
-cost = 0.5*cost;
-J=cost;
+XM = zeros(size(Theta));
+XM = (X*Theta' - Y)
+
+
 
 % =============================================================
 
