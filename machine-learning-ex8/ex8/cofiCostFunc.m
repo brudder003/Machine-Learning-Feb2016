@@ -63,16 +63,20 @@ M = (X*Theta' - Y).^2;
 %bc vectorized is faster than loops,
 %but now need to elimated all the costs i calc-ed when
 % a movie was rated, ie r(i,j) = 0
-J = (0.5)*(sum(sum(R.*M)));
+
+%regularization term
+reg = 0.5*lambda*sum(sum(Theta.^2)) + 0.5 * lambda*(sum(sum(X.^2)));
+
+J = (0.5)*(sum(sum(R.*M))) + reg;
 
 %Gradient
+X_grad = R.*(X*Theta' - Y) * Theta + lambda*X;
 
-%loop over movies
-for i=1:size(R,1)
+Theta_grad = (R.*(X*Theta' - Y))' * X + lambda*Theta;
   
 
-XM = zeros(size(Theta));
-XM = (X*Theta' - Y)
+%XM = zeros(size(Theta));
+%XM = (X*Theta' - Y);
 
 
 
