@@ -141,6 +141,8 @@ X = [ones(m, 1) X];
 % Calculate the parameters from the normal equation
 theta = normalEqn(X, y);
 
+theta = normalEqn(train_qso_first,lambdas);
+
 % Display normal equation's result
 fprintf('Theta computed from the normal equations: \n');
 fprintf(' %f \n', theta);
